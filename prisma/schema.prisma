@@ -1,0 +1,29 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["referentialIntegrity"]
+}
+
+datasource db {
+  provider          = "postgresql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_URL")
+  relationMode      = "prisma"
+}
+
+model MOVIE {
+  id                BigInt    @id @default(autoincrement())
+  title             String?   @db.VarChar
+  original_language String?   @db.VarChar
+  overview          String?   @db.VarChar
+  original_title    String?   @db.VarChar
+  poster_path       String?   @db.VarChar
+  media_type        String?   @db.VarChar
+  popularity        Float?    @default(0)
+  vote_average      Float?    @default(0)
+  vote_count        Float?    @default(0)
+  release_date      DateTime? @db.Date
+  created_at        DateTime? @default(now()) @db.Timestamptz(6)
+  created_by_       String?   @default("''JOB_LOAD::character varying") @map("created_by ") @db.VarChar
+  updated_at        DateTime? @default(now()) @db.Timestamptz(6)
+  updated_by        String?   @default("JOB_LOAD") @db.VarChar
+}
